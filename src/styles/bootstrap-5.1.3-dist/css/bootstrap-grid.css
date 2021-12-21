@@ -1659,6 +1659,11 @@
   margin-left: 3rem !important;
 }
 
+.mx-6 {
+  margin-right: 4.5rem !important;
+  margin-left: 4.5rem !important;
+}
+
 .mx-auto {
   margin-right: auto !important;
   margin-left: auto !important;

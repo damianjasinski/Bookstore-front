@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { GetData } from "../../services/GetData";
+import NavMenu from "./NavMenu";
 
 const Home = () => {
   const [logged, setLogged] = useState(true);
@@ -13,8 +14,8 @@ const Home = () => {
     GetData("login_register/user-info.php", token)
       .then((response) => {
         console.log(response);
-        setUser(response.user);
-        console.log(user)
+        setUser(JSON.stringify(response.user));
+        
       })
       .catch((err) => {
         console.log(err);
@@ -30,23 +31,10 @@ const Home = () => {
   if (!sessionStorage.getItem("token")) {
     return <Navigate to={"/"} />;
   }
-
   return (
-    <div>
-      <div className="row small-up-2 medium-up-3 large-up-4">
-        <div className="columns">
-          <input
-            className="button large"
-            type="button"
-            name="logout"
-            value="Logout"
-            onClick={Logout}
-          ></input>
-        </div>
-        <div className="medium-12">
-          <h2> Welcome: {user.email}</h2>
-        </div>
-      </div>
+    <div className="container position-absolute top-50 start-50 translate-middle">
+      
+      <NavMenu/>
     </div>
   );
 };
