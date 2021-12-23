@@ -1,7 +1,5 @@
-import "./Header.css";
 import React from "react";
-import { Navigate } from "react-router";
-import logo from "./../../resources/book.png"; // with import
+import "./Header.css";
 
 const Header = () => {
   return (

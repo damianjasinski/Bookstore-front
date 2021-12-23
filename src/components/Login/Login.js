@@ -1,9 +1,8 @@
-import React from "react";
-import { useState } from "react";
-import { PostData } from "../../services/PostData";
-import BookIco from "@mui/icons-material/LocalLibraryOutlined";
 import ArrowIco from '@mui/icons-material/ArrowBack';
+import BookIco from "@mui/icons-material/LocalLibraryOutlined";
+import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { PostData } from "../../services/PostData";
 
 const Login = () => {
   //inputs should be passed to PostData (fetch)
@@ -38,7 +37,7 @@ const Login = () => {
   }
 
   return (
-    <div class="container mx-auto">
+    <div className="container mx-auto">
       <div className="row position-absolute top-50 start-50 translate-middle">
         <div className="border rounded  bg-light col-12">
           <div className="">
@@ -55,7 +54,6 @@ const Login = () => {
               type="email"
               name="email"
               className="form-control"
-              id="exampleInputEmail1"
               aria-describedby="emailHelp"
               placeholder="Enter email"
               onChange={handleChange}
@@ -63,13 +61,12 @@ const Login = () => {
 
           </div>
           <div className="row mx-3 mt-4 text-center">
-            <h6 for="exampleInputEmail1">Enter password </h6>
+            <h6 for="exampleInputpwd">Enter password </h6>
             <input
               type="password"
               name="password"
               className="form-control"
-              id="exampleInputEmail1"
-              placeholder="Enter email"
+              placeholder="Enter password"
               onChange={handleChange}
             />
           </div>

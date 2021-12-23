@@ -1,9 +1,8 @@
-import React from "react";
-import { useState } from "react";
+import ArrowIco from '@mui/icons-material/ArrowBack';
+import BookIco from "@mui/icons-material/LocalLibraryOutlined";
+import React, { useState } from "react";
 import { Navigate } from "react-router";
 import { PostData } from "../../services/PostData";
-import BookIco from "@mui/icons-material/LocalLibraryOutlined";
-import ArrowIco from '@mui/icons-material/ArrowBack';
 
 const Footer = () => {
   //inputs should be passed to PostData (fetch)
@@ -40,11 +39,11 @@ const Footer = () => {
   }
 
   return (
-    <div class="container mx-auto">
+    <div className="container mx-auto">
       <div className="row position-absolute top-50 start-50 translate-middle">
         <div className="border rounded bg-light">
           <div className="">
-            <a href="/" style={{ color: "black" }}>
+            <a href="/"  style={{ color: "black" }}>
               <ArrowIco className="mt-3 mx-1" fontSize="large" />
             </a>
           </div>

@@ -7,5 +7,9 @@ export const GetData = async (type, token) => {
     }
   });
   const data = await response.json();
+  if (data.success === 0) {
+    sessionStorage.setItem("token", "");
+    sessionStorage.clear();
+  }
   return data;
 };

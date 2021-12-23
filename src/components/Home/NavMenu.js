@@ -1,8 +1,9 @@
 import React from "react";
-import { useState, useEffect } from "react";
-import { Navigate } from "react-router-dom";
-import { GetData } from "../../services/GetData";
-import Reroute from "../../routes";
+
+const Logout = () => {
+  sessionStorage.setItem("token", "");
+  sessionStorage.clear();
+};
 
 export const NavMenu = () => {
   return (
@@ -48,7 +49,7 @@ export const NavMenu = () => {
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
-                <button class="btn btn-lg btn-outline-success mx-6 mt-2">Logout</button>
+                <button onClick = {Logout} className="btn btn-lg btn-outline-success mx-6 mt-2">Logout</button>
                 </li>
               </ul>
             </div>

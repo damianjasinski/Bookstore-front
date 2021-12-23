@@ -5,7 +5,7 @@ const Footer = () => {
     <div
       className="container-fluid fixed-bottom text-center w-bold font-monospace rounded"
     >
-      <p class="text-light fs-6">©2021 Jasiński Damian PŁ</p>
+      <p className="text-light fs-6">©2021 Jasiński Damian PŁ</p>
     </div>
   );
 };

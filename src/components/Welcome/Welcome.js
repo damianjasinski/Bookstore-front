@@ -7,7 +7,7 @@ const Welcome = () => {
     return <Navigate to={"/home"} />;
   }
   return (
-    <div class="container mx-auto">
+    <div className="container mx-auto">
       <div className="row position-absolute top-50 start-50 translate-middle">
         <div className="border rounded  text-center bg-light">
           <BookIco className="mt-5" fontSize="large" />
