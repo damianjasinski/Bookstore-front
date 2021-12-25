@@ -1,11 +1,21 @@
 import React from "react";
-
-const Logout = () => {
-  sessionStorage.setItem("token", "");
-  sessionStorage.clear();
-};
+import { Navigate } from "react-router-dom"
+import { useState } from "react"
 
 export const NavMenu = () => {
+  
+  const [logged, setLogged] = useState(true);
+  
+  const Logout = () => {
+    sessionStorage.setItem("token", "");
+    sessionStorage.clear();
+    setLogged(false);
+  };
+  
+  if (!sessionStorage.getItem("token")) {
+    return <Navigate to={"/"} />;
+  }
+  
   return (
     <div className="justify-content-center d-flex ">
       <div className="row border rounded  bg-light">
@@ -49,7 +59,7 @@ export const NavMenu = () => {
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
-                <button onClick = {Logout} className="btn btn-lg btn-outline-success mx-6 mt-2">Logout</button>
+                  <button onClick={Logout} className="btn btn-lg btn-outline-success mx-6 mt-2">Logout</button>
                 </li>
               </ul>
             </div>
