@@ -11,5 +11,5 @@ export const GetData = async (type, token) => {
     sessionStorage.setItem("token", "");
     sessionStorage.clear();
   }
-  return data;
+  return await data;
 };

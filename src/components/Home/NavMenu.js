@@ -35,26 +35,32 @@ export const NavMenu = () => {
             <div className="collapse navbar-collapse " id="navbarNav">
               <ul className="navbar-nav ">
                 <li className="nav-item active ">
-                  <a className="mx-6 mt-1 nav-link " href="/books">
+                  <a className="mx-5 mt-1 nav-link " href="/books">
                     <h3>Books</h3> <span className="sr-only"></span>
                   </a>
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
-                  <a className="mx-6 mt-1 nav-link" href="#">
+                  <a className="mx-5 mt-1 nav-link" href="#">
                     <h3>Orders</h3>
                   </a>
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
-                  <a className="mx-6 mt-1 nav-link" href="#">
+                  <a className="mx-5 mt-1 nav-link" href="#">
                     <h3>Search</h3>
                   </a>
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
-                  <a className="mx-6 mt-1 nav-link" href="#">
+                  <a className="mx-5 mt-1 nav-link" href="/profile">
                     <h3>Profile</h3>
+                  </a>
+                </li>
+                <div className="vr"></div>
+                <li className="nav-item">
+                  <a className="mx-5 mt-1 nav-link" href="/profile">
+                    <h3>Address</h3>
                   </a>
                 </li>
                 <div className="vr"></div>

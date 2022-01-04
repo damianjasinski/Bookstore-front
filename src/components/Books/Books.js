@@ -31,10 +31,10 @@ const Books = () => {
 
 
   return (
-    <div className="container mt-3 ">
+    <div className="container ">
       <NavMenu />
 
-      <div className="mt-1 bg-light border rounded overflow-auto" style={{ height: "550px" }}>
+      <div className="bg-light border rounded overflow-auto" style={{ height: "590px" }}>
         <div className="row overflow-auto mx-4 p-2 my-3 ">
           {books.map((book) => {
             if (book.available == 1) return (
@@ -44,21 +44,21 @@ const Books = () => {
                   <h6 className="card-subtitle mb-2 text-muted">{book.author}</h6>
                   <p className="card-text  overflow-auto" style={{ height: "8em" }} >{book.description}</p>
                   <div className="mt-auto mx-auto">
-                    <a href="#" className="card-linkbtn border btn-lg btn-outline-success">Order</a>
+                    <a style={{ textDecoration: "none" }} href="#" className="card-linkbtn border btn-lg btn-outline-primary">Order</a>
                   </div>
                 </div>
               </div>
             )
             else return (
-              <div key={book.id} className="card mx-auto   border border-secondary overflow-auto" style={{ width: "18em" }}>
+              <div key={book.id} className="card mx-auto border border-secondary overflow-auto" style={{ width: "18em" }}>
                 <div className="card-body d-flex flex-column">
                   <h5 className="card-title">{book.name}</h5>
                   <h6 className="card-subtitle mb-2 text-muted">{book.author}</h6>
                   <p className="card-text  overflow-auto" style={{ height: "8em" }} >{book.description}</p>
                   <div className="row">
                     <div className="mt-auto col-6">
-                      <a href="#" className="disabled card-linkbtn border btn-lg btn-outline-success">Order</a>
-                    </div>  
+                      <a style={{ textDecoration: "none" }} href="#" className="disabled card-linkbtn border btn-lg btn-outline-primary">Order</a>
+                    </div>
                     <div className="col-6"><h6>Out of stock</h6></div>
                   </div>
                 </div>

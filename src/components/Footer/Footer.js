@@ -3,7 +3,7 @@ import React from "react";
 const Footer = () => {
   return (
     <div
-      className="container-fluid fixed-bottom text-center w-bold font-monospace rounded"
+      className="container-fluid  text-center w-bold font-monospace rounded"
     >
       <p className="text-light fs-6">©2021 Jasiński Damian PŁ</p>
     </div>

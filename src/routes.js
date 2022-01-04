@@ -6,6 +6,7 @@ import Signup from "./components/Signup/Signup";
 import NotFound from "./components/NotFound/NotFound";
 import Home from "./components/Home/Home";
 import Books from "./components/Books/Books";
+import Profile from "./components/Profile/Profile";
 
 const Reroute = () => {
   return (
@@ -16,6 +17,7 @@ const Reroute = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
         <Route path="/books" element={<Books />} />
+        <Route path="/profile" element={<Profile />} />
         <Route path="*" element={<NotFound />} />
         
       </Routes>

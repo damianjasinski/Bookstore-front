@@ -8,12 +8,9 @@ const Home = () => {
 
   useEffect(() => {
     const token = JSON.parse(sessionStorage.getItem("token"));
-    console.log(token);
-    GetData("login_register/user-info.php", token)
+    GetData("api/user-info.php", token)
       .then((response) => {
-        console.log(response);
-        setUser(JSON.stringify(response.user));
-        
+        setUser(response.user);
       })
       .catch((err) => {
         console.log(err);
@@ -27,8 +24,8 @@ const Home = () => {
   }
   return (
     <div className="container d-flex flex-column mt-3">
-      
-      <NavMenu/>
+
+      <NavMenu />
     </div>
   );
 };
