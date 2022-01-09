@@ -1,20 +1,20 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { GetData } from "../../services/GetData";
 import NavMenu from "./NavMenu";
 
 const Home = () => {
-  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const token = JSON.parse(sessionStorage.getItem("token"));
     GetData("api/user-info.php", token)
       .then((response) => {
-        setUser(response.user);
+        sessionStorage.setItem("user", JSON.stringify(response.user));
       })
       .catch((err) => {
         console.log(err);
       });
+      
   }, []);
 
 

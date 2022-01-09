@@ -3,6 +3,8 @@ import BookIco from "@mui/icons-material/LocalLibraryOutlined";
 import React, { useState } from "react";
 import { Navigate } from "react-router";
 import { PostData } from "../../services/PostData";
+import { notifyError, notifyWarn, notifySucc } from "../../util/Toasts"
+import { ToastContainer } from 'react-bootstrap';
 
 const Footer = () => {
   //inputs should be passed to PostData (fetch)
@@ -22,13 +24,12 @@ const Footer = () => {
       let response = result;
       if (response.success === 1) {
         setSuccess(true);
-        window.alert("Signup Complete");
+        notifySucc("Signup Complete");
       } else {
-        window.alert(response.message);
+        notifyError(response.message);
       }
     });
   };
-
 
   if (success) {
     return <Navigate to={"/"} />;
@@ -40,10 +41,21 @@ const Footer = () => {
 
   return (
     <div className="container mx-auto">
+      <ToastContainer
+        position="top-center"
+        autoClose={2500}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="row position-absolute top-50 start-50 translate-middle">
         <div className="border rounded bg-light">
           <div className="">
-            <a href="/"  style={{ color: "black" }}>
+            <a href="/" style={{ color: "black" }}>
               <ArrowIco className="mt-3 mx-1" fontSize="large" />
             </a>
           </div>

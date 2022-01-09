@@ -8,21 +8,16 @@ const Books = () => {
 
 
   useEffect(() => {
-    if (!sessionStorage.getItem("token")) {
-      console.log("BRAK")
-    }
-    else {
-      console.log(sessionStorage.getItem("token"))
-      const token = JSON.parse(sessionStorage.getItem("token"));
-      GetData("api/book/read.php", token)
-        .then((response) => {
 
-          setBooks((response.data));
-        })
-        .catch((err) => {
-          console.log(err)
-        });
-    }
+    const token = JSON.parse(sessionStorage.getItem("token"));
+    GetData("api/book/read.php", token)
+      .then((response) => {
+        console.log(response);
+        setBooks((response.data));
+      })
+      .catch((err) => {
+        console.log(err)
+      });
   }, []);
 
   if (!sessionStorage.getItem("token")) {
@@ -30,6 +25,7 @@ const Books = () => {
   }
 
 
+  console.log(books)
   return (
     <div className="container ">
       <NavMenu />
@@ -37,8 +33,8 @@ const Books = () => {
       <div className="bg-light border rounded overflow-auto" style={{ height: "590px" }}>
         <div className="row overflow-auto mx-4 p-2 my-3 ">
           {books.map((book) => {
-            if (book.available == 1) return (
-              <div key={book.id} className="card mx-auto   border border-secondary overflow-auto" style={{ width: "18em" }}>
+            if (book.available == true) return (
+              <div key={book.id} className="card mx-auto border border-secondary overflow-auto" style={{ width: "18em" }}>
                 <div className="card-body d-flex flex-column">
                   <h5 className="card-title">{book.name}</h5>
                   <h6 className="card-subtitle mb-2 text-muted">{book.author}</h6>

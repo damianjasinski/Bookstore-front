@@ -1,9 +1,8 @@
 import React from "react";
 import { Navigate } from "react-router-dom"
-import { useState } from "react"
+import { useState } from "react";
 
 export const NavMenu = () => {
-  
   const [logged, setLogged] = useState(true);
   
   const Logout = () => {
@@ -36,31 +35,31 @@ export const NavMenu = () => {
               <ul className="navbar-nav ">
                 <li className="nav-item active ">
                   <a className="mx-5 mt-1 nav-link " href="/books">
-                    <h3>Books</h3> <span className="sr-only"></span>
+                    <h4>Books</h4> <span className="sr-only"></span>
                   </a>
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
                   <a className="mx-5 mt-1 nav-link" href="#">
-                    <h3>Orders</h3>
+                    <h4>Orders</h4>
                   </a>
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
                   <a className="mx-5 mt-1 nav-link" href="#">
-                    <h3>Search</h3>
+                    <h4>Search</h4>
                   </a>
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
                   <a className="mx-5 mt-1 nav-link" href="/profile">
-                    <h3>Profile</h3>
+                    <h4>Profile</h4>
                   </a>
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
-                  <a className="mx-5 mt-1 nav-link" href="/profile">
-                    <h3>Address</h3>
+                  <a className="mx-5 mt-1 nav-link" href="/address">
+                    <h4>Address</h4>
                   </a>
                 </li>
                 <div className="vr"></div>

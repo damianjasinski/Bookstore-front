@@ -3,6 +3,9 @@ import BookIco from "@mui/icons-material/LocalLibraryOutlined";
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
 import { PostData } from "../../services/PostData";
+import { notifyError } from "../../util/Toasts"
+import { ToastContainer } from "react-toastify";
+
 
 const Login = () => {
   //inputs should be passed to PostData (fetch)
@@ -23,10 +26,11 @@ const Login = () => {
         sessionStorage.setItem("token", JSON.stringify([response.token]));
         setSuccess(true);
       } else {
-        window.alert(response.message);
+        notifyError("Invalid email or password!");
       }
     });
   };
+
 
   if (success) {
     return <Navigate to={"/home"} />;
@@ -38,10 +42,21 @@ const Login = () => {
 
   return (
     <div className="container mx-auto">
+      <ToastContainer
+        position="top-center"
+        autoClose={2500}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <div className="row position-absolute top-50 start-50 translate-middle">
         <div className="border rounded  bg-light col-12">
           <div className="">
-            <a href="/" style = {{color:"black"}}>
+            <a href="/" style={{ color: "black" }}>
               <ArrowIco className="mt-3 mx-1" fontSize="large" />
             </a>
           </div>
@@ -49,7 +64,7 @@ const Login = () => {
             <BookIco className="" fontSize="large" />
           </div>
           <div className="row mx-3 mt-4 text-center">
-            <h6 for="exampleInputEmail1">Enter Email address</h6>
+            <h6 htmlFor="exampleInputEmail1">Enter Email address</h6>
             <input
               type="email"
               name="email"
@@ -61,7 +76,7 @@ const Login = () => {
 
           </div>
           <div className="row mx-3 mt-4 text-center">
-            <h6 for="exampleInputpwd">Enter password </h6>
+            <h6 htmlFor="exampleInputpwd">Enter password </h6>
             <input
               type="password"
               name="password"

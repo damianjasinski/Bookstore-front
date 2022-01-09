@@ -1,16 +1,18 @@
-import { Tune } from "@mui/icons-material";
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { GetData } from "../../services/GetData";
 import { PostData } from "../../services/PostData";
 import { NavMenu } from "../Home/NavMenu";
+import { notifyError, notifyWarn, notifySucc } from "../../util/Toasts"
+import { ToastContainer } from "react-toastify";
+import AccountBoxIcon from '@mui/icons-material/AccountBox';
 
 const Profile = () => {
 
   //inputs should be passed to PostData (fetch)
-  const [inputs, setInputs] = useState({ "userId": "", "password": "", "password2": "", "email": "", "phoneNumber": "", "firstName": "", "secondName": "" });
+  const [inputs, setInputs] = useState({ "password": "", "password2": "", "email": "", "phoneNumber": "", "firstName": "", "secondName": "" });
   //store current user data
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState([]);
   const [change, setChange] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -18,9 +20,13 @@ const Profile = () => {
     const token = JSON.parse(sessionStorage.getItem("token"));
     GetData("api/user-info.php", token)
       .then((response) => {
+        console.log(response)
         setUser((response.user));
-        for (const [key, value] of Object.entries(user)) {
-          setInputs((values) => ({ ...values, [key]: value }));
+        sessionStorage.setItem("user", JSON.stringify(response.user));
+        if (user.length !== 0) {
+          for (const [key, value] of Object.entries(user)) {
+            setInputs((values) => ({ ...values, [key]: value }));
+          }
         }
         setLoading(false);
       })
@@ -31,6 +37,7 @@ const Profile = () => {
 
 
   const handleChange = (event) => {
+    console.log(JSON.parse(sessionStorage.getItem("user")))
     if (change === false) {
       setChange(true);
     }
@@ -40,23 +47,23 @@ const Profile = () => {
     console.log(inputs);
   };
 
-  const updateRequest = () => {
+  const sendUpdateRequest = () => {
     if (change === false) {
-      window.alert("Nothing to update")
+      notifyWarn("Nothing to update");
     }
     else {
       if (inputs.firstName.length < 3)
-        window.alert("Bad First Name format!");
+        notifyError("First name is invalid");
       else if (inputs.secondName.length < 3)
-        window.alert("Bad Second Name Format");
+        notifyError("Second name is invalid");
       else if (!validateEmail(inputs.email))
-        window.alert("Bad email format");
+        notifyError("Email is invalid");
       else if (!validatePhoneNumber(inputs.phoneNumber))
-        window.alert("Phone number is invalid!")
+        notifyError("Phone number is invalid");
       else if (inputs.password.length !== 0 && inputs.password.length < 8)
-        window.alert("Password is too short!");
-      else if (inputs.password != inputs.password2)
-        window.alert("Password doesnt match!");
+        notifyError("Password is too short");
+      else if (inputs.password !== inputs.password2)
+        notifyError("Passwords doesnt match");
       else {
         console.log(inputs.password.length)
         console.log("all ok")
@@ -64,10 +71,10 @@ const Profile = () => {
         PostData("api/profile/update.php", inputs, token).then((result) => {
           let response = result;
           if (response.success === 1) {
-            window.alert("Update Complete");
+            notifySucc("Update complete");
             setLoading(true);
           } else {
-            window.alert(response.message);
+            notifyWarn(response.message);
           }
         });
       }
@@ -82,7 +89,7 @@ const Profile = () => {
   };
 
   const validatePhoneNumber = (phoneNumber) => {
-    if (!/[0-9]/.test(phoneNumber) || phoneNumber.length > 9 || phoneNumber.length < 9 ) {
+    if (!/[0-9]/.test(phoneNumber) || phoneNumber.length > 9 || phoneNumber.length < 9) {
       return false;
     }
     return true;
@@ -96,20 +103,34 @@ const Profile = () => {
   console.log(inputs);
   return (
     <div className="container">
+      <ToastContainer
+        position="top-center"
+        autoClose={2500}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
       <NavMenu />
       <div className="d-flex flex-column bg-light border rounded overflow-auto" style={{ height: "590px" }}>
-        <div className=" row mt-5 mx-5">
+        <div className="text-center">
+          <AccountBoxIcon style={{ transform: "scale(2.8)" }} className="mt-4" />
+        </div>
+        <div className=" row mt-5 mx-lg-5">
           <div className="col-1"></div>
-          <div className="col-3 mx-4">
+          <div className="col-lg-3 mx-lg-5">
             <h5>First Name</h5>
             <input name="firstName" class="form-control" placeholder={user.firstName} aria-describedby="firstNameHelp" onChange={handleChange} />
             <span id="firstNameHelp" class="form-text">
               Must be atleast 3 characters long.
             </span>
           </div>
-          <div className="col-3">
+          <div className="col-lg-3">
           </div>
-          <div className="col-3">
+          <div className="col-lg-3">
             <h5>Second Name</h5>
             <input name="secondName" class="form-control" placeholder={user.secondName} aria-describedby="secondNameHelp" onChange={handleChange} />
             <span id="secondNameHelp" class="form-text">
@@ -117,18 +138,18 @@ const Profile = () => {
             </span>
           </div>
         </div>
-        <div className=" row mt-4 mx-5 ">
-          <div className="col-1"></div>
-          <div className="col-3 mx-4">
+        <div className=" row mt-4 mx-lg-5 ">
+          <div className="col-lg-1"></div>
+          <div className="col-lg-3 mx-lg-5">
             <h5>Email</h5>
             <input name="email" class="form-control" placeholder={user.email} aria-describedby="emailHelp" onChange={handleChange} />
             <span id="emailHelp" class="form-text">
               Must be an email.
             </span>
           </div>
-          <div className="col-3">
+          <div className="col-lg-3 text-center " >
           </div>
-          <div className="col-3">
+          <div className="col-lg-3">
             <h5>Password</h5>
             <input name="password" type="password" class="form-control" aria-describedby="pwdNameHelp" onChange={handleChange} />
             <span id="pwdNameHelp" class="form-text">
@@ -136,18 +157,18 @@ const Profile = () => {
             </span>
           </div>
         </div>
-        <div className=" row mt-4 mx-5 ">
-          <div className="col-1"></div>
-          <div className="col-3 mx-4">
+        <div className=" row mt-4 mx-lg-5 ">
+          <div className="col-lg-1"></div>
+          <div className="col-lg-3 mx-lg-5">
             <h5>Phone Number</h5>
             <input name="phoneNumber" class="form-control" placeholder={user.phoneNumber} aria-describedby="phoneNumberHelp" onChange={handleChange} />
             <span id="phoneNumberHelp" class="form-text">
               Must be 9 numbers.
             </span>
           </div>
-          <div className="col-3">
+          <div className="col-lg-3">
           </div>
-          <div className="col-3">
+          <div className="col-lg-3">
             <h5>Retype Password</h5>
             <input name="password2" type="password" class="form-control" aria-describedby="pwdNameHelp2" onChange={handleChange} />
             <span id="pwdNameHelp2" class="form-text">
@@ -155,8 +176,8 @@ const Profile = () => {
             </span>
           </div>
         </div>
-        <div className="mx-auto mb-6 mt-auto">
-          <a style={{ textDecoration: "none" }} href="#" className="card-linkbtn border btn-lh btn-primary" onClick={updateRequest}>Update Profile</a>
+        <div className="mx-auto mb-lg-6 mt-lg-auto">
+          <a style={{ textDecoration: "none" }} href="#" className="card-linkbtn border btn-lh btn-primary" onClick={sendUpdateRequest}>Update Profile</a>
         </div>
       </div>
     </div>

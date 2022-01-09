@@ -7,6 +7,7 @@ import NotFound from "./components/NotFound/NotFound";
 import Home from "./components/Home/Home";
 import Books from "./components/Books/Books";
 import Profile from "./components/Profile/Profile";
+import Address from "./components/Address/Address";
 
 const Reroute = () => {
   return (
@@ -18,6 +19,7 @@ const Reroute = () => {
         <Route path="/home" element={<Home />} />
         <Route path="/books" element={<Books />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/address" element={<Address />} />
         <Route path="*" element={<NotFound />} />
         
       </Routes>
