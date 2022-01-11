@@ -16,7 +16,7 @@ export const NavMenu = () => {
   }
   
   return (
-    <div className="justify-content-center d-flex ">
+    <div className="justify-content-center mt-5 d-flex ">
       <div className="row border rounded  bg-light">
         <div className=" bg-light ">
           <nav className="text-center navbar navbar-expand-lg navbar-light bg-light">
@@ -40,7 +40,7 @@ export const NavMenu = () => {
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
-                  <a className="mx-5 mt-1 nav-link" href="#">
+                  <a className="mx-5 mt-1 nav-link" href="/orders">
                     <h4>Orders</h4>
                   </a>
                 </li>

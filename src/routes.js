@@ -8,6 +8,8 @@ import Home from "./components/Home/Home";
 import Books from "./components/Books/Books";
 import Profile from "./components/Profile/Profile";
 import Address from "./components/Address/Address";
+import NewAddress from "./components/Address/NewAddress";
+import Orders from "./components/Orders/Orders";
 
 const Reroute = () => {
   return (
@@ -20,6 +22,8 @@ const Reroute = () => {
         <Route path="/books" element={<Books />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/address" element={<Address />} />
+        <Route path="/newaddress" element={<NewAddress />} />
+        <Route path="/orders" element={<Orders />} />
         <Route path="*" element={<NotFound />} />
         
       </Routes>

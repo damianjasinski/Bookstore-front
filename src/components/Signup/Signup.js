@@ -3,32 +3,67 @@ import BookIco from "@mui/icons-material/LocalLibraryOutlined";
 import React, { useState } from "react";
 import { Navigate } from "react-router";
 import { PostData } from "../../services/PostData";
-import { notifyError, notifyWarn, notifySucc } from "../../util/Toasts"
-import { ToastContainer } from 'react-bootstrap';
+import { ToastContainer } from "react-toastify";
+import { notifyError } from "../../util/Toasts"
+import { notifySucc } from "../../util/Toasts"
+import { notifyWarn } from "../../util/Toasts"
 
-const Footer = () => {
+const Signup = () => {
   //inputs should be passed to PostData (fetch)
-  const [inputs, setInputs] = useState({});
+  const [inputs, setInputs] = useState({
+    password: "",
+    password2: "",
+    email: "",
+    firstName: "",
+    secondName: "",
+  });
   //setting response success status
   const [success, setSuccess] = useState(false);
+  const [change, setChange] = useState(false);
 
   const handleChange = (event) => {
+    console.log(inputs)
+    setChange(true)
     const name = event.target.name;
     const value = event.target.value;
     setInputs((values) => ({ ...values, [name]: value }));
   };
 
   const signup = () => {
-    PostData("login_register/register.php", inputs).then((result) => {
-      console.log(JSON.stringify(inputs));
-      let response = result;
-      if (response.success === 1) {
-        setSuccess(true);
-        notifySucc("Signup Complete");
-      } else {
-        notifyError(response.message);
-      }
-    });
+    if (change === false) 
+      notifyWarn("Nothing is entered");
+    else if (inputs.firstName.length < 3) 
+      notifyError("First name is invalid");
+    else if (inputs.secondName.length < 3)
+      notifyError("Second name is invalid");
+    else if (!validateEmail(inputs.email))
+      notifyError("Email is invalid");
+    else if (inputs.password.length === 0) 
+      notifyError("Enter password");
+    else if (inputs.password.length !== 0 && inputs.password.length < 8)
+      notifyError("Password is too short");
+    else if (inputs.password !== inputs.password2)
+      notifyError("Passwords doesnt match");
+    else {
+      console.log("XD");
+      PostData("login_register/register.php", inputs).then((result) => {
+        console.log(JSON.stringify(inputs));
+        let response = result;
+        if (response.success === 1) {
+          notifySucc("Signup Complete");
+          setSuccess(true);
+        } else {
+          notifyError(response.message);
+        }
+      });
+    }
+  };
+
+  const validateEmail = (email) => {
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+      return true;
+    }
+    return false;
   };
 
   if (success) {
@@ -51,7 +86,7 @@ const Footer = () => {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-      />
+      />  
       <div className="row position-absolute top-50 start-50 translate-middle">
         <div className="border rounded bg-light">
           <div className="">
@@ -105,6 +140,16 @@ const Footer = () => {
               onChange={handleChange}
             />
           </div>
+          <div className="row mx-3 mt-3  text-center ">
+            <h6 >Re-type password </h6>
+            <input
+              type="password"
+              name="password2"
+              className="form-control"
+              placeholder="password"
+              onChange={handleChange}
+            />
+          </div>
           <div className="text-center">
             <a
               onClick={signup}
@@ -120,4 +165,4 @@ const Footer = () => {
   );
 };
 
-export default Footer;
+export default Signup;
