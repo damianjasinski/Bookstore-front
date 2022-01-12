@@ -2,8 +2,7 @@ import React from "react";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import Reroute from "./routes";
-// import "./styles/foundation.min.css";
-// import "./styles/custom.css";
+
 
 
 function App() {

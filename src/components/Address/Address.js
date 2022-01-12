@@ -47,6 +47,7 @@ const Address = () => {
 
   const handleDropdownChange = (event) => {
     const addrId = event.target.name;
+    //find array id of chosen address id
     let arrayId = 0;
     for (const [key, value] of Object.entries(address)) {
       if (value.id == addrId) break;

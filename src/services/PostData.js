@@ -8,8 +8,12 @@ export const PostData = async (type, userData, token) => {
         Authorization: "Bearer " + token,
       }
     });
-    const json = await response.json();
-    return json;
+    const data = await response.json();
+    if (data.status === 401) {
+      sessionStorage.setItem("token", "");
+      sessionStorage.clear();
+    }
+    return data;
   } catch (error) {
     console.error(error);
   }
