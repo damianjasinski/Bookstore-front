@@ -109,7 +109,7 @@ const Address = () => {
         <NavMenu address = "fs-3 text-dark text fw-bolder font-weight-bold" />
         <div
           className="d-flex flex-column bg-light border rounded overflow-auto"
-          style={{ height: "590px" }}
+          style={{ height: "640px" }}
         >
           <div className="text-center ">
             <HomeIcon style={{ transform: "scale(2.8)" }} className="mt-4" />
@@ -156,7 +156,7 @@ const Address = () => {
           <div className=" row mt-sm-5 mx-lg-5">
             <div className="col-lg-1"></div>
             <div className="col-lg-3 mx-lg-5">
-              <h5>City</h5>
+              <h4>City</h4>
               <input
                 name="city"
                 class="form-control"
@@ -170,7 +170,7 @@ const Address = () => {
             </div>
             <div className="col-lg-3"></div>
             <div className="col-lg-3">
-              <h5>Post Code</h5>
+              <h4>Post Code</h4>
               <input
                 name="postCode"
                 class="form-control"
@@ -186,7 +186,7 @@ const Address = () => {
           <div className=" row mt-lg-5 mx-lg-5">
             <div className="col-lg-1"></div>
             <div className="col-lg-3 mx-lg-5">
-              <h5>Street</h5>
+              <h4>Street</h4>
               <input
                 name="street"
                 class="form-control"
@@ -200,7 +200,7 @@ const Address = () => {
             </div>
             <div className="col-lg-3"></div>
             <div className="col-lg-3">
-              <h5>Building Number</h5>
+              <h4>Building Number</h4>
               <input
                 name="buildingNumber"
                 class="form-control"

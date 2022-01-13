@@ -2,10 +2,16 @@ import { NavMenu } from "../Home/NavMenu";
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { GetData } from "../../services/GetData";
+import EventNoteIcon from "@mui/icons-material/EventNote";
+import { Pay } from "./Pay";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [filteredOrders, setFilteredOrders] = useState([]);
+  const [selectedFilterOption, setSelectedFilterOption] =
+    useState("Filter orders");
+  const [address, setAddress] = useState([]);
 
   useEffect(() => {
     const token = JSON.parse(sessionStorage.getItem("token"));
@@ -13,12 +19,33 @@ const Orders = () => {
       .then((response) => {
         console.log(response);
         setOrders(response.data);
+        setFilteredOrders(orders);
         setLoading(true);
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [loading]);
+
+  const passAddressToModal = () => {
+    const addresses = JSON.parse(sessionStorage.getItem("address"));
+    setAddress(addresses);
+  };
+
+  const filterNotFinalized = () => {
+    setFilteredOrders(orders.filter((order) => order.finalized == 0));
+    setSelectedFilterOption("Not finalized");
+  };
+
+  const filterFinalized = () => {
+    setFilteredOrders(orders.filter((order) => order.finalized == 1));
+    setSelectedFilterOption("Finalized");
+  };
+
+  const filterExpired = () => {
+    setFilteredOrders(orders.filter((order) => order.expired == 1));
+    setSelectedFilterOption("Expired");
+  };
 
   if (!sessionStorage.getItem("token")) {
     return <Navigate to={"/"} />;
@@ -27,28 +54,74 @@ const Orders = () => {
 
   return (
     <div className="container">
-      <NavMenu orders = "fs-3 text-dark text fw-bolder font-weight-bold"/>
+      <Pay addresses={address} />
+      <NavMenu orders="fs-3 text-dark text fw-bolder font-weight-bold" />
       <div
         className="d-flex flex-column bg-light border rounded overflow-auto"
-        style={{ height: "590px" }}
+        style={{ height: "640px" }}
       >
-        <div className="mx-5 my-4 ">
-          {orders?.map((order) => {
-            if (order.finalized == 0) {
+        <div className="mx-5 my-2 ">
+          <div className="text-center ">
+            <EventNoteIcon
+              style={{ transform: "scale(2.5)" }}
+              className="mt-4"
+            />
+          </div>
+          <div className="dropdown text-center mt-4">
+            <button
+              className="btn border btn-lg dropdown-toggle"
+              type="button"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              {selectedFilterOption}
+            </button>
+            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+              <li>
+                <a
+                  className="dropdown-item"
+                  onClick={filterNotFinalized}
+                  href="#"
+                >
+                  Not finalized
+                </a>
+              </li>
+              <li>
+                <a className="dropdown-item" onClick={filterFinalized} href="#">
+                  Finalized
+                </a>
+              </li>
+              <li>
+                <a className="dropdown-item" onClick={filterExpired} href="#">
+                  Expired
+                </a>
+              </li>
+            </ul>
+          </div>
+          {filteredOrders?.map((order) => {
+            if (order.finalized == 0)
               return (
-                <div className="row">
+                <div className="row mt-3">
                   <div className="text col-lg-10">
-                    <h5>Order of book: &nbsp; &nbsp;{order.name}</h5>
-                    <h5>Ordered at date: &nbsp; &nbsp;{order.createdAt}</h5>
-                    <h5>
+                    <h6 className="fs-5-6">
+                      Order of book: &nbsp; &nbsp;{order.name}
+                    </h6>
+                    <h6 className="fs-5-6">
+                      Ordered at date: &nbsp; &nbsp;{order.createdAt}
+                    </h6>
+                    <h6 className="fs-5-6">
                       Expiration date: &nbsp; &nbsp;{order.expirationDate}
-                    </h5>
-                    <h5>Finalized: &nbsp; &nbsp;No</h5>
+                    </h6>
                   </div>
-                  <div className="col-lg-2 mt-5">
+                  <div className="col-lg-2 mt-3">
                     <a
+                      href="#"
+                      data-bs-toggle="modal"
+                      data-bs-target="#staticBackdrop"
                       style={{ textDecoration: "none" }}
                       className="button btn-lg btn-primary"
+                      onClick={passAddressToModal}
                     >
                       Pay
                     </a>
@@ -56,29 +129,25 @@ const Orders = () => {
                   <hr />
                 </div>
               );
-            } else {
+            else
               return (
-                <div className="row">
+                <div className="row mt-3">
                   <div className="text col-lg-10">
-                    <h5>Order of book: &nbsp; &nbsp;{order.name}</h5>
-                    <h5>Ordered at date: &nbsp; &nbsp;{order.createdAt}</h5>
-                    <h5>
+                    <h6 className="fs-5-6">
+                      Order of book: &nbsp; &nbsp;{order.name}
+                    </h6>
+                    <h6 className="fs-5-6">
+                      Ordered at date: &nbsp; &nbsp;{order.createdAt}
+                    </h6>
+                    <h6 className="fs-5-6">
                       Expiration date: &nbsp; &nbsp;{order.expirationDate}
-                    </h5>
-                    <h5>Finalized: &nbsp; &nbsp;Yes</h5>
+                    </h6>
                   </div>
-                  <div className="col-lg-2 mt-5">
-                    <a
-                      style={{ textDecoration: "none" }}
-                      className="button btn-lg btn-primary"
-                    >
-                      Pay
-                    </a>
+                  <div className="col-lg-2 mt-3">
                   </div>
                   <hr />
                 </div>
               );
-            }
           })}
         </div>
         <div className="mx-auto mb-6 mt-auto"></div>

@@ -120,7 +120,7 @@ const Profile = () => {
         <NavMenu profile = "fs-3 text-dark text fw-bolder font-weight-bold"/>
         <div
           className="d-flex flex-column bg-light border rounded overflow-auto"
-          style={{ height: "590px" }}
+          style={{ height: "640px" }}
         >
           <div className="text-center">
             <AccountBoxIcon

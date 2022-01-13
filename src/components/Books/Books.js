@@ -43,12 +43,12 @@ const Books = () => {
 
   console.log(books);
   return (
-    <div className="container ">
+    <div className="container">
      {<BookOrder  bookId = {bookId} bookAuthor = {bookAuthor} bookName = {bookName} />}
       <NavMenu books = "fs-3 text-dark text fw-bolder font-weight-bold"/>
       <div
         className="bg-light border rounded overflow-auto"
-        style={{ height: "590px" }}
+        style={{ height: "700px" }}
       >
         <div className="row overflow-auto mx-4 p-2 my-3 ">
           {books.map((book) => {
@@ -56,8 +56,8 @@ const Books = () => {
               return (
                 <div
                   key={book.id}
-                  className="card mx-auto border border-secondary overflow-auto"
-                  style={{ width: "18em" }}
+                  className="card mb-2 mx-auto border border-secondary overflow-auto"
+                  style={{ width: "22em" }}
                 >
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title">{book.name}</h5>
@@ -66,7 +66,7 @@ const Books = () => {
                     </h6>
                     <p
                       className="card-text  overflow-auto"
-                      style={{ height: "8em" }}
+                      style={{ height: "9em" }}
                     >
                       {book.description}
                     </p>
@@ -90,8 +90,8 @@ const Books = () => {
               return (
                 <div
                   key={book.id}
-                  className="card mx-auto border border-secondary overflow-auto"
-                  style={{ width: "18em" }}
+                  className="card mb-2 mx-auto border border-secondary overflow-auto"
+                  style={{ width: "22em" }}
                 >
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title">{book.name}</h5>
