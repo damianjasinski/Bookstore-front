@@ -45,7 +45,7 @@ const Books = () => {
   return (
     <div className="container ">
      {<BookOrder  bookId = {bookId} bookAuthor = {bookAuthor} bookName = {bookName} />}
-      <NavMenu />
+      <NavMenu books = "fs-3 text-dark text fw-bolder font-weight-bold"/>
       <div
         className="bg-light border rounded overflow-auto"
         style={{ height: "590px" }}

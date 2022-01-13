@@ -2,9 +2,10 @@ import React from "react";
 import { Navigate } from "react-router-dom"
 import { useState } from "react";
 
-export const NavMenu = () => {
+export const NavMenu = (props) => {
   const [logged, setLogged] = useState(true);
-  
+
+
   const Logout = () => {
     sessionStorage.setItem("token", "");
     sessionStorage.clear();
@@ -34,32 +35,32 @@ export const NavMenu = () => {
             <div className="collapse navbar-collapse " id="navbarNav">
               <ul className="navbar-nav ">
                 <li className="nav-item active ">
-                  <a className="mx-5 mt-1 nav-link " href="/books">
-                    <h4>Books</h4> <span className="sr-only"></span>
+                  <a className="mx-5 mt-1 nav-link" href="/books">
+                    <h4 className={props.books}>Books</h4> <span className="sr-only"></span>
                   </a>
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
                   <a className="mx-5 mt-1 nav-link" href="/orders">
-                    <h4>Orders</h4>
+                    <h4 className={props.orders}>Orders</h4>
                   </a>
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
                   <a className="mx-5 mt-1 nav-link" href="#">
-                    <h4>Search</h4>
+                    <h4 className={props.search}>Search</h4>
                   </a>
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
                   <a className="mx-5 mt-1 nav-link" href="/profile">
-                    <h4>Profile</h4>
+                    <h4 className={props.profile}>Profile</h4>
                   </a>
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
-                  <a className="mx-5 mt-1 nav-link" href="/address">
-                    <h4>Address</h4>
+                  <a className="mx-5 mt-1 nav-link"href="/address">
+                    <h4 className={props.address}>Address</h4>
                   </a>
                 </li>
                 <div className="vr"></div>
@@ -74,4 +75,13 @@ export const NavMenu = () => {
     </div>
   );
 };
+
+NavMenu.defaultProps = {
+  books : " ",
+  orders : "",
+  search : "",
+  profile : "",
+  address : ""
+};
+
 export default NavMenu;
