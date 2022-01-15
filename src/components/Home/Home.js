@@ -4,7 +4,6 @@ import { GetData } from "../../services/GetData";
 import NavMenu from "./NavMenu";
 
 const Home = () => {
-
   useEffect(() => {
     const token = JSON.parse(sessionStorage.getItem("token"));
     GetData("api/user-info.php", token)
@@ -14,17 +13,20 @@ const Home = () => {
       .catch((err) => {
         console.log(err);
       });
-      
+    GetData("api/address/read.php", token)
+      .then((response) => {
+        sessionStorage.setItem("address", JSON.stringify(response.data));
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
-
-
 
   if (!sessionStorage.getItem("token")) {
     return <Navigate to={"/"} />;
   }
   return (
     <div className="container d-flex flex-column mt-3">
-
       <NavMenu />
     </div>
   );

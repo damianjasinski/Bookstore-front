@@ -16,6 +16,7 @@ const Address = () => {
     country: "",
     street: "",
     buildingNumber: "",
+    apartment: "",
   });
   //store current user data
   const [address, setAddress] = useState([]);
@@ -29,8 +30,8 @@ const Address = () => {
       .then((response) => {
         if (response.data === undefined) setAddress(null);
         else {
-          sessionStorage.setItem("address", JSON.stringify(address));
           setAddress(response.data);
+          sessionStorage.setItem("address", JSON.stringify(address));
         }
         if (address !== null && address?.length > 0) {
           for (const [key, value] of Object.entries(address[selectedAddress])) {
@@ -73,16 +74,34 @@ const Address = () => {
       notifyWarn("Nothing to update");
     }
     else {
-      const token = JSON.parse(sessionStorage.getItem("token"));
-      PostData("api/address/update.php", inputs, token).then((result) => {
-        console.log(inputs);
-        let response = result;
-        if (response.success === 1) {
-          notifySucc("Addres update success");
-        } else {
-          notifyError(response.message);
-        }
-      });
+      let regexPostCode = /^[0-9]{5}$/;
+      let regexBuildingNumber = /^[0-9]{1,4}[a-zA-Z]?$/;
+      if (inputs.city.length < 3) 
+        notifyError("City is invalid");
+      else if ( inputs.postCode.length != 5 || !regexPostCode.test(inputs.postCode) )
+        notifyError("Post code is invalid");
+      else if (inputs.country.length < 4) 
+        notifyError("Country is invalid");
+      else if (inputs.street.length < 3) 
+        notifyError("Street name is invalid");
+      else if (inputs.street.length < 3) 
+        notifyError("Street name is invalid");
+      else if (!regexBuildingNumber.test(inputs.buildingNumber))
+        notifyError("Building number is invalid");
+      else if (!regexBuildingNumber.test(inputs.apartment))
+        notifyError("Apartment number is invalid");
+      else {
+        const token = JSON.parse(sessionStorage.getItem("token"));
+        PostData("api/address/update.php", inputs, token).then((result) => {
+          console.log(inputs);
+          let response = result;
+          if (response.success === 1) {
+            notifySucc("Addres update success");
+          } else {
+            notifyError(response.message);
+          }
+        });
+      }  
     }
   };
 
@@ -106,7 +125,7 @@ const Address = () => {
           draggable
           pauseOnHover
         />
-        <NavMenu address = "fs-3 text-dark text fw-bolder font-weight-bold" />
+        <NavMenu address="fs-3 text-dark text fw-bolder font-weight-bold" />
         <div
           className="d-flex flex-column bg-light border rounded overflow-auto"
           style={{ height: "640px" }}
@@ -153,7 +172,7 @@ const Address = () => {
               </li>
             </ul>
           </div>
-          <div className=" row mt-sm-5 mx-lg-5">
+          <div className=" row mt-lg-3 mx-lg-5">
             <div className="col-lg-1"></div>
             <div className="col-lg-3 mx-lg-5">
               <h4>City</h4>
@@ -183,7 +202,7 @@ const Address = () => {
               </span>
             </div>
           </div>
-          <div className=" row mt-lg-5 mx-lg-5">
+          <div className=" row mt-lg-4 mx-lg-5">
             <div className="col-lg-1"></div>
             <div className="col-lg-3 mx-lg-5">
               <h4>Street</h4>
@@ -213,7 +232,23 @@ const Address = () => {
               </span>
             </div>
           </div>
-          <div className="mx-auto mb-6 mt-auto">
+          <div className=" row mt-lg-4 mx-lg-5">
+            <div className="col-lg-1"></div>
+            <div className="col-lg-3 mx-lg-5">
+              <h4>Apartment</h4>
+              <input
+                name="apartment"
+                class="form-control"
+                placeholder={inputs.apartment}
+                aria-describedby="streetNameHelp"
+                onChange={handleChange}
+              />
+              <span id="streetNameHelp" class="form-text">
+                Must be an integer.
+              </span>
+            </div>
+          </div>
+          <div className="mx-auto mb-5 mt-auto">
             <a
               type="button"
               style={{ textDecoration: "none" }}

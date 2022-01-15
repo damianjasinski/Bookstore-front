@@ -42,12 +42,14 @@ const NewAddress = () => {
   const sendAddAddressRequest = () => {
     if (change === false) {
       notifyWarn("Nothing to update");
-    }
-    else {
+    } else {
       let regexPostCode = /^[0-9]{5}$/;
       let regexBuildingNumber = /^[0-9]{1,4}[a-zA-Z]?$/;
       if (address.city.length < 3) notifyError("City is invalid");
-      else if ( address.postCode.length != 5 || !regexPostCode.test(address.postCode) )
+      else if (
+        address.postCode.length != 5 ||
+        !regexPostCode.test(address.postCode)
+      )
         notifyError("Post code is invalid");
       else if (address.country.length < 4) notifyError("Country is invalid");
       else if (address.street.length < 3) notifyError("Street name is invalid");
@@ -57,7 +59,7 @@ const NewAddress = () => {
         const token = JSON.parse(sessionStorage.getItem("token"));
         PostData("api/address/add.php", address, token).then((result) => {
           let response = result;
-          console.log(response)
+          console.log(response);
           if (response.success === 1) {
             setSuccess(true);
           } else {
@@ -70,7 +72,7 @@ const NewAddress = () => {
 
   if (success) {
     notifySucc("New address set!");
-    return <Navigate to = {"/address"} />
+    return <Navigate to={"/address"} />;
   }
 
   if (!sessionStorage.getItem("token")) {
@@ -96,10 +98,10 @@ const NewAddress = () => {
         className="d-flex flex-column bg-light border rounded overflow-auto"
         style={{ height: "590px" }}
       >
-        <div className="text-center mb-lg-2">
+        <div className="text-center mb-lg-3 mt-1">
           <HomeIcon style={{ transform: "scale(2.8)" }} className="mt-4" />
         </div>
-        <div className=" row mt-sm-5 mx-lg-5">
+        <div className=" row mt-sm-4 mx-lg-5">
           <div className="col-lg-1"></div>
           <div className="col-lg-3 mx-lg-5">
             <h5>City</h5>
@@ -159,12 +161,28 @@ const NewAddress = () => {
             </span>
           </div>
         </div>
-        <div className="mx-auto mb-6 mt-auto">
+        <div className=" row mt-lg-4 mx-lg-5">
+          <div className="col-lg-1"></div>
+          <div className="col-lg-3 mx-lg-5">
+            <h4>Apartment</h4>
+            <input
+              name="apartment"
+              class="form-control"
+              placeholder={address.apartment}
+              aria-describedby="streetNameHelp"
+              onChange={handleChange}
+            />
+            <span id="streetNameHelp" class="form-text">
+              Must be an integer.
+            </span>
+          </div>
+        </div>
+        <div className="mx-auto mb-5 mt-auto">
           <a
             style={{ textDecoration: "none" }}
             className="card-linkbtn border btn-lh btn-success"
-            onClick = {sendAddAddressRequest}
-            href = "#"
+            onClick={sendAddAddressRequest}
+            href="#"
           >
             Add Address
           </a>

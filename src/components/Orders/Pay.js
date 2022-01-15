@@ -6,7 +6,9 @@ import { ToastContainer } from "react-toastify";
 
 export const Pay = (props) => {
 
-  const [selectedAddress, setSelectedAdress] = useState([])
+  const [selectedAddress, setSelectedAdress] = useState({
+    city: "Select Address",
+  })
 
   const setAddrex = (event) => {
     const addrId = event.target.name;
@@ -115,5 +117,7 @@ export const Pay = (props) => {
     </div>
   );
 };
+
+
 
 export default Pay;

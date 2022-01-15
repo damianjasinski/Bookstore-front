@@ -33,7 +33,7 @@ const Login = () => {
 
 
   if (success) {
-    return <Navigate to={"/home"} />;
+    return <Navigate to={"/books"} />;
   }
 
   if (sessionStorage.getItem("token")) {

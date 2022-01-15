@@ -2,6 +2,7 @@ import React from "react";
 import { Navigate } from "react-router-dom"
 import { useState } from "react";
 
+
 export const NavMenu = (props) => {
   const [logged, setLogged] = useState(true);
 
@@ -21,11 +22,12 @@ export const NavMenu = (props) => {
       <div className="row border rounded  bg-light">
         <div className=" bg-light ">
           <nav className="text-center navbar navbar-expand-lg navbar-light bg-light">
+            <div className="container-fluid">
             <button
               className="navbar-toggler"
               type="button"
-              data-toggle="collapse"
-              data-target="#navbarNav"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
               aria-controls="navbarNav"
               aria-expanded="false"
               aria-label="Toggle navigation"
@@ -34,7 +36,7 @@ export const NavMenu = (props) => {
             </button>
             <div className="collapse navbar-collapse " id="navbarNav">
               <ul className="navbar-nav ">
-                <li className="nav-item active ">
+                <li className="nav-item ">
                   <a className="mx-5 mt-1 nav-link" href="/books">
                     <h4 className={props.books}>Books</h4> <span className="sr-only"></span>
                   </a>
@@ -65,9 +67,10 @@ export const NavMenu = (props) => {
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
-                  <button onClick={Logout} className="btn btn-lg btn-outline-success mx-6 mt-2">Logout</button>
+                  <button onClick={Logout} className="btn btn-lg btn-outline-success mx-5 mt-2">Logout</button>
                 </li>
               </ul>
+            </div>
             </div>
           </nav>
         </div>
