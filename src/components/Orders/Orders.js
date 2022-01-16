@@ -10,6 +10,8 @@ import { ToastContainer } from "react-toastify";
 const Orders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [loading2, setLoading2] = useState(false);
+  const [loading3, setLoading3] = useState(false);
   const [filteredOrders, setFilteredOrders] = useState([]);
   const [selectedFilterOption, setSelectedFilterOption] =
     useState("Filter orders");
@@ -24,7 +26,7 @@ const Orders = () => {
         setOrders(response.data);
         setFilteredOrders(orders);
         console.log(response.data)
-        
+        setLoading(true)
       })
       .catch((err) => {
         console.log(err);
@@ -33,7 +35,7 @@ const Orders = () => {
       .then((response) => {
         const user = sessionStorage.setItem("user", JSON.stringify(response.user));
         setUser(response.user);
- 
+        setLoading2(true)
       })
       .catch((err) => {
         console.log(err);
@@ -42,7 +44,7 @@ const Orders = () => {
       .then((response) => {
         sessionStorage.setItem("address", JSON.stringify(response.data));
         setAddress(response.data)
-        setLoading(true);
+        setLoading3(true);
       })
       .catch((err) => {
         console.log(err);
