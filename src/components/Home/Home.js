@@ -1,9 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { GetData } from "../../services/GetData";
-import NavMenu from "./NavMenu";
 
 const Home = () => {
+
+  const [loading, setLaoding] = useState(true)
+
   useEffect(() => {
     const token = JSON.parse(sessionStorage.getItem("token"));
     GetData("api/user-info.php", token)
@@ -16,19 +18,18 @@ const Home = () => {
     GetData("api/address/read.php", token)
       .then((response) => {
         sessionStorage.setItem("address", JSON.stringify(response.data));
+        setLaoding(false)
       })
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [loading]);
 
   if (!sessionStorage.getItem("token")) {
     return <Navigate to={"/"} />;
   }
   return (
-    <div className="container d-flex flex-column mt-3">
-      <NavMenu />
-    </div>
+    <Navigate to={"/books"} />
   );
 };
 

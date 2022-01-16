@@ -6,12 +6,12 @@ import { ToastContainer } from "react-toastify";
 
 export const BookOrder = (props) => {
 
-
   const sendAddOrderRequest = () => {
     const token = JSON.parse(sessionStorage.getItem("token"));
     const bookId = {"bookId" : props.bookId};
     PostData("api/order/add.php", bookId, token).then((result) => {
       let response = result;
+      console.log(response)
       if (response.success === 1) {
         notifySucc("Book ordered successfully");
       } else {

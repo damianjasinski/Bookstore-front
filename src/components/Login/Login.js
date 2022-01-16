@@ -37,7 +37,7 @@ const Login = () => {
   }
 
   if (sessionStorage.getItem("token")) {
-    return <Navigate to={"/home"} />;
+    return <Navigate to={"/books"} />;
   }
 
   return (

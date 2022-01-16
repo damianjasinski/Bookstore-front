@@ -4,6 +4,8 @@ import { Navigate } from "react-router-dom";
 import { GetData } from "../../services/GetData";
 import EventNoteIcon from "@mui/icons-material/EventNote";
 import { Pay } from "./Pay";
+import { notifySucc } from "../../util/Toasts";
+import { ToastContainer } from "react-toastify";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
@@ -12,14 +14,34 @@ const Orders = () => {
   const [selectedFilterOption, setSelectedFilterOption] =
     useState("Filter orders");
   const [address, setAddress] = useState([]);
+  const [user, setUser] = useState([])
+  const [orderId, setOrderId] = useState(0)
 
   useEffect(() => {
     const token = JSON.parse(sessionStorage.getItem("token"));
     GetData("api/order/read.php", token)
       .then((response) => {
-        console.log(response);
         setOrders(response.data);
         setFilteredOrders(orders);
+        console.log(response.data)
+        
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    GetData("api/user-info.php", token)
+      .then((response) => {
+        const user = sessionStorage.setItem("user", JSON.stringify(response.user));
+        setUser(response.user);
+ 
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    GetData("api/address/read.php", token)
+      .then((response) => {
+        sessionStorage.setItem("address", JSON.stringify(response.data));
+        setAddress(response.data)
         setLoading(true);
       })
       .catch((err) => {
@@ -27,9 +49,9 @@ const Orders = () => {
       });
   }, [loading]);
 
-  const passAddressToModal = () => {
-    const addresses = JSON.parse(sessionStorage.getItem("address"));
-    setAddress(addresses);
+  const passDataToModal = (event) => {
+    console.log(event.target.name)
+    setOrderId(event.target.name)
   };
 
   const filterNotFinalized = () => {
@@ -50,11 +72,11 @@ const Orders = () => {
   if (!sessionStorage.getItem("token")) {
     return <Navigate to={"/"} />;
   }
-  console.log(orders);
 
   return (
     <div className="container">
-      <Pay addresses={address} />
+    
+      <Pay addresses={address} user = {user.phoneNumber} orderId = {orderId} />
       <NavMenu orders="fs-3 text-dark text fw-bolder font-weight-bold" />
       <div
         className="d-flex flex-column bg-light border rounded overflow-auto"
@@ -121,7 +143,8 @@ const Orders = () => {
                       data-bs-target="#staticBackdrop"
                       style={{ textDecoration: "none" }}
                       className="button btn-lg btn-primary"
-                      onClick={passAddressToModal}
+                      name = {order.orderId}
+                      onClick={passDataToModal}
                     >
                       Pay
                     </a>
@@ -143,8 +166,7 @@ const Orders = () => {
                       Expiration date: &nbsp; &nbsp;{order.expirationDate}
                     </h6>
                   </div>
-                  <div className="col-lg-2 mt-3">
-                  </div>
+                  <div className="col-lg-2 mt-3"></div>
                   <hr />
                 </div>
               );
