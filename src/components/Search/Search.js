@@ -44,7 +44,7 @@ const Search = () => {
   const sendSearchRequest = () => {
     if (change === false) {
       notifyWarn("Enter book name phrase");
-    } else if (searchPhrase.length < 2) {
+    } else if (searchPhrase["searchPhrase"].length < 2) {
       notifyWarn("Need atleast 2 letters to search");
     } else {
       var searchVal = "%";
