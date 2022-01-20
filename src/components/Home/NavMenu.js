@@ -49,7 +49,7 @@ export const NavMenu = (props) => {
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
-                  <a className="mx-5 mt-1 nav-link" href="#">
+                  <a className="mx-5 mt-1 nav-link" href="/search">
                     <h4 className={props.search}>Search</h4>
                   </a>
                 </li>
