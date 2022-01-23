@@ -4,7 +4,7 @@ import BookIco from "@mui/icons-material/LocalLibraryOutlined";
 
 const Welcome = () => {
   if (sessionStorage.getItem("token")) {
-    return <Navigate to={"/home"} />;
+    return <Navigate to={"/books"} />;
   }
   return (
     <div className="container mx-auto">

@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { GetData } from "../../services/GetData";
-import { NavMenu } from "../Home/NavMenu";
-import { BookOrder } from "./BookOrder";
-
+import { PostData } from "../../services/PostData";
+import { notifyError, notifySucc } from "../../util/Toasts";
+import { ToastContainer } from "react-toastify";
+import { AdminNavMenu } from "./AdminNavMenu";
 
 const Books = () => {
   const [books, setBooks] = useState([]);
-  const [isModal, setModal] = useState(false);
-  const [bookName, setBookName] = useState(" ")
-  const [bookAuthor, setBookAuthor] = useState(0)
-  const [bookId, setBookId] = useState(0)
+  const [bookName, setBookName] = useState(" ");
+  const [bookAuthor, setBookAuthor] = useState(0);
+  const [bookId, setBookId] = useState(0);
 
   useEffect(() => {
     const token = JSON.parse(sessionStorage.getItem("token"));
@@ -22,40 +22,42 @@ const Books = () => {
       .catch((err) => {
         console.log(err);
       });
-      
-      
   }, []);
 
-  console.log(sessionStorage.getItem("role"))
-  if (!sessionStorage.getItem("token")) {
+  const sendDeleteRequest = (event) => {
+    const bookId = {"bookId" : event.target.name}
+    const token = JSON.parse(sessionStorage.getItem("token"));
+    PostData("api/admin/book/delete.php", bookId, token).then((response) => {
+        if (response.message === 'Success') {
+            notifySucc("Succesfully deleted book with id: " + event.target.name)
+        }    
+        else {
+            notifyError(response.data);
+        }
+    });
+  };
+  
+  if (sessionStorage.getItem("role") !== 'admin' || !sessionStorage.getItem("token") ) {
     return <Navigate to={"/"} />;
   }
 
-  if (sessionStorage.getItem("role") === "admin") {
-    return <Navigate to = {"/adminbooks"} />
-  }
-
-  const showModal = (event) => {
-     const bookIdx = event.target.name;
-     //find array id of chosen book id
-     let arrayId = 0;
-     for (const [key, value] of Object.entries(books)) {
-       if (value.id == bookIdx) break;
-       arrayId += 1;
-     }
-    setBookId(bookIdx);
-    setBookAuthor(books[arrayId].author)
-    setBookName(books[arrayId].name)
-  };
-
-  console.log(books);
   return (
     <div className="container">
-     {<BookOrder  bookId = {bookId} bookAuthor = {bookAuthor} bookName = {bookName} />}
-      <NavMenu books = "fs-3 text-dark text fw-bolder font-weight-bold"/>
+      <ToastContainer
+        position="top-center"
+        autoClose={2500}
+        hideProgressBar={true}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+      />
+      <AdminNavMenu books="fs-3 text-dark text fw-bolder font-weight-bold" />
       <div
         className="bg-light border rounded overflow-auto"
-        style={{ height: "700px" }}
+        style={{ height: "720px" }}
       >
         <div className="row overflow-auto mx-4 p-2 my-3 ">
           {books.map((book) => {
@@ -79,15 +81,13 @@ const Books = () => {
                     </p>
                     <div className="mt-auto mx-auto">
                       <a
-                        name = {book.id}
-                        style={{ textDecoration: "none" }}
-                        data-bs-toggle="modal"
-                        data-bs-target="#staticBackdrop"
+                        name={book.id}
                         href="#"
-                        onClick={showModal}
+                        style={{ textDecoration: "none" }}
+                        onClick={sendDeleteRequest}
                         className="card-linkbtn border btn-lg btn-outline-primary"
                       >
-                        Order
+                        Delete
                       </a>
                     </div>
                   </div>
@@ -115,10 +115,12 @@ const Books = () => {
                       <div className="mt-auto col-6">
                         <a
                           style={{ textDecoration: "none" }}
+                          name={book.id}
                           href="#"
                           className="disabled card-linkbtn border btn-lg btn-outline-primary"
+                          onClick={sendDeleteRequest}
                         >
-                          Order
+                          Delete
                         </a>
                       </div>
                       <div className="col-6">

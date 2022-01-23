@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import { PostData } from "../../services/PostData";
-import { NavMenu } from "../Home/NavMenu";
+import { AdminNavMenu } from "./AdminNavMenu";
 import SearchIcon from "@mui/icons-material/Search";
 import { ToastContainer } from "react-toastify";
 import { notifySucc, notifyWarn } from "../../util/Toasts";
 
-const Search = () => {
+const AdminSearch = () => {
   const [books, setBooks] = useState([]);
   const [isModal, setModal] = useState(false);
   const [bookName, setBookName] = useState(" ");
@@ -59,14 +59,9 @@ const Search = () => {
       });
     }
   };
-  if (!sessionStorage.getItem("token")) {
+  if (sessionStorage.getItem("role") !== 'admin' || !sessionStorage.getItem("token") ) {
     return <Navigate to={"/"} />;
   }
-
-  if (sessionStorage.getItem("role") === "admin") {
-    return <Navigate to={"/adminbooks"} />;
-  }
-
   return (
     <div className="container">
       <ToastContainer
@@ -80,7 +75,7 @@ const Search = () => {
         draggable
         pauseOnHover
       />
-      <NavMenu search="fs-3 text-dark text fw-bolder font-weight-bold" />
+      <AdminNavMenu search="fs-3 text-dark text fw-bolder font-weight-bold" />
       <div
         className="bg-light border rounded overflow-auto"
         style={{ height: "700px" }}
@@ -151,4 +146,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default AdminSearch;

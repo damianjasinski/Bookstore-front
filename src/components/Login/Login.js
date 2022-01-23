@@ -24,11 +24,12 @@ const Login = () => {
       let response = result;
       if (response.success === 1) {
         sessionStorage.setItem("token", JSON.stringify([response.token]));
+        sessionStorage.setItem("role", [response.role]);
         setSuccess(true);
       } else {
         notifyError("Invalid email or password!");
       }
-    });
+    }, [success]);
   };
 
 
@@ -39,6 +40,8 @@ const Login = () => {
   if (sessionStorage.getItem("token")) {
     return <Navigate to={"/books"} />;
   }
+
+
 
   return (
     <div className="container mx-auto">

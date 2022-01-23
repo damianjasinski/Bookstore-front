@@ -72,20 +72,18 @@ const Address = () => {
   const sendUpdateRequest = () => {
     if (change === false) {
       notifyWarn("Nothing to update");
-    }
-    else {
+    } else {
       let regexPostCode = /^[0-9]{5}$/;
       let regexBuildingNumber = /^[0-9]{1,4}[a-zA-Z]?$/;
-      if (inputs.city.length < 3) 
-        notifyError("City is invalid");
-      else if ( inputs.postCode.length != 5 || !regexPostCode.test(inputs.postCode) )
+      if (inputs.city.length < 3) notifyError("City is invalid");
+      else if (
+        inputs.postCode.length != 5 ||
+        !regexPostCode.test(inputs.postCode)
+      )
         notifyError("Post code is invalid");
-      else if (inputs.country.length < 4) 
-        notifyError("Country is invalid");
-      else if (inputs.street.length < 3) 
-        notifyError("Street name is invalid");
-      else if (inputs.street.length < 3) 
-        notifyError("Street name is invalid");
+      else if (inputs.country.length < 4) notifyError("Country is invalid");
+      else if (inputs.street.length < 3) notifyError("Street name is invalid");
+      else if (inputs.street.length < 3) notifyError("Street name is invalid");
       else if (!regexBuildingNumber.test(inputs.buildingNumber))
         notifyError("Building number is invalid");
       else if (!regexBuildingNumber.test(inputs.apartment))
@@ -101,7 +99,7 @@ const Address = () => {
             notifyError(response.message);
           }
         });
-      }  
+      }
     }
   };
 
@@ -109,6 +107,10 @@ const Address = () => {
     console.log(sessionStorage.getItem("token"));
     return <Navigate to={"/"} />;
   }
+  if (sessionStorage.getItem("role") === "admin") {
+    return <Navigate to={"/adminbooks"} />;
+  }
+
   if (address == null) {
     return <Navigate to={"/newaddress"} />;
   } else

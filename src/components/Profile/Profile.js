@@ -100,6 +100,10 @@ const Profile = () => {
   if (!sessionStorage.getItem("token")) {
     return <Navigate to={"/"} />;
   }
+  if (sessionStorage.getItem("role") === "admin") {
+    return <Navigate to = {"/adminbooks"} />
+  }
+
 
   if (loading == true) {
     return <h1>Loading...</h1>;

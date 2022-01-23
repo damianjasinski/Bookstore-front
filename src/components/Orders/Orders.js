@@ -74,6 +74,9 @@ const Orders = () => {
   if (!sessionStorage.getItem("token")) {
     return <Navigate to={"/"} />;
   }
+  if (sessionStorage.getItem("role") === "admin") {
+    return <Navigate to = {"/adminbooks"} />
+  }
 
   return (
     <div className="container">

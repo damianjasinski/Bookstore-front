@@ -71,7 +71,7 @@ const Signup = () => {
   }
 
   if (sessionStorage.getItem("token")) {
-    return <Navigate to={"/"} />;
+    return <Navigate to={"/books"} />;
   }
 
   return (

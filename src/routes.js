@@ -11,7 +11,9 @@ import Address from "./components/Address/Address";
 import NewAddress from "./components/Address/NewAddress";
 import Orders from "./components/Orders/Orders";
 import Search from "./components/Search/Search";
-
+import AdminBooks from "./components/Admin/Books";
+import AddBook from "./components/Admin/AddBook";
+import AdminSearch from "./components/Admin/Search";
 
 const Reroute = () => {
   return (
@@ -27,6 +29,9 @@ const Reroute = () => {
         <Route path="/newaddress" element={<NewAddress />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/search" element={<Search />} />
+        <Route path="/adminbooks" element={<AdminBooks />} />
+        <Route path="/addbook" element={<AddBook />} />
+        <Route path="/adminsearch" element={<AdminSearch />} />
         <Route path="*" element={<NotFound />} />
         
       </Routes>
