@@ -48,13 +48,13 @@ export const AdminNavMenu = (props) => {
                 <div className="vr"></div>
                 <li className="nav-item">
                   <a className="mx-5 mt-1 nav-link" href="/adminsearch">
-                    <h4 className={props.search}>Search</h4>
+                    <h4 className={props.search}>Search Book</h4>
                   </a>
                 </li>
                 <div className="vr"></div>
                 <li className="nav-item">
-                  <a className="mx-5 mt-1 nav-link" href="/profile">
-                    <h4 className={props.profile}>Users</h4>
+                  <a className="mx-5 mt-1 nav-link" href="/adminusers">
+                    <h4 className={props.users}>Users</h4>
                   </a>
                 </li>
                 
@@ -76,8 +76,7 @@ AdminNavMenu.defaultProps = {
   books : " ",
   addbook : "",
   search : "",
-  profile : "",
-  address : ""
+  users : ""
 };
 
 export default AdminNavMenu;

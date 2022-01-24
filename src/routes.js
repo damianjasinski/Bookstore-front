@@ -14,6 +14,7 @@ import Search from "./components/Search/Search";
 import AdminBooks from "./components/Admin/Books";
 import AddBook from "./components/Admin/AddBook";
 import AdminSearch from "./components/Admin/Search";
+import AdminUsersView from "./components/Admin/Users";
 
 const Reroute = () => {
   return (
@@ -32,6 +33,7 @@ const Reroute = () => {
         <Route path="/adminbooks" element={<AdminBooks />} />
         <Route path="/addbook" element={<AddBook />} />
         <Route path="/adminsearch" element={<AdminSearch />} />
+        <Route path="/adminusers" element={<AdminUsersView />} />
         <Route path="*" element={<NotFound />} />
         
       </Routes>

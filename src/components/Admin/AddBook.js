@@ -24,11 +24,6 @@ const AddBook = () => {
 
   useEffect(() => {
     const token = JSON.parse(sessionStorage.getItem("token"));
-    GetData("api/user-info.php", token)
-      .then((response) => {})
-      .catch((err) => {
-        console.log(err);
-      });
     GetData("api/category/read.php", token)
       .then((response) => {
         setCategories(response.data);
